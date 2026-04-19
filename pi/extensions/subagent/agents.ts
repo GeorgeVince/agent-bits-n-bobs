@@ -1,0 +1,1 @@
+/Users/georgevince/.nvm/versions/node/v22.19.0/lib/node_modules/@mariozechner/pi-coding-agent/examples/extensions/subagent/agents.ts
