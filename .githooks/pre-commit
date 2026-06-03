@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#
+# Pre-commit secret scanner.
+# Blocks commits that introduce sensitive filenames or secret-like strings.
+# Bypass intentionally with:  git commit --no-verify
+#
+set -euo pipefail
+
+# Staged files being added/copied/modified (not deletions).
+mapfile -t files < <(git diff --cached --name-only --diff-filter=ACM)
+[ ${#files[@]} -eq 0 ] && exit 0
+
+problems=0
+
+# Filenames that should never be committed.
+sensitive_name='(^|/)(\.env(\..*)?|auth\.json|.*\.pem|.*\.key|.*\.p12|.*\.pfx|id_rsa.*|id_ed25519.*|credentials.*\.json|.*\.secret|secrets\..*)$'
+
+# Secret-like content patterns.
+secret_content='sk-[A-Za-z0-9]{16,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|gho_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|xox[baprs]-[A-Za-z0-9-]{10,}|-----BEGIN ([A-Z ]+)?PRIVATE KEY-----|AIza[0-9A-Za-z_-]{30,}|Bearer[[:space:]]+[A-Za-z0-9._-]{20,}|(api[_-]?key|secret|password|token)[[:space:]]*[:=][[:space:]]*["'"'"'][^"'"'"']{12,}'
+
+for f in "${files[@]}"; do
+  # 1) Sensitive filename
+  if echo "$f" | grep -qiE "$sensitive_name"; then
+    # Allow obvious templates/examples.
+    case "$f" in
+      *.example|*.example.*|*example*|*.sample|*.pub) : ;;
+      *) echo "✋ Blocked: sensitive filename staged → $f"; problems=1 ;;
+    esac
+  fi
+
+  # 2) Secret-like content (scan the STAGED blob, skip binary).
+  blob=":$f"
+  if git show "$blob" 2>/dev/null | grep -qIE "$secret_content"; then
+    # Skip the example config which uses ${VAR} placeholders only.
+    case "$f" in
+      *example*|*.sample|*.md) : ;;
+      *)
+        echo "✋ Blocked: possible secret in → $f"
+        git show "$blob" | grep -nIE "$secret_content" | sed 's/^/      /' | head -5
+        problems=1
+        ;;
+    esac
+  fi
+done
+
+if [ "$problems" -ne 0 ]; then
+  echo ""
+  echo "Commit aborted. Remove the secret, or use 'git commit --no-verify' if this is a false positive."
+  exit 1
+fi
+
+exit 0
