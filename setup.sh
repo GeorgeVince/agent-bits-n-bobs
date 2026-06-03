@@ -25,10 +25,28 @@ link_dir() {
   done
 }
 
+# Helper: symlink a whole directory (overwrites existing link/dir)
+link_subdir() {
+  local src="$1" dest="$2"
+  rm -rf "$dest"
+  ln -s "$src" "$dest"
+  echo "  $(basename "$dest")/"
+}
+
 # Link repo config
 link_dir "Agents"     "$REPO_DIR/pi/agents"     "*.md" "$PI_DIR/agents"
 link_dir "Prompts"    "$REPO_DIR/pi/prompts"     "*.md" "$PI_DIR/prompts"
 link_dir "Extensions" "$REPO_DIR/pi/extensions"  "*.ts" "$PI_DIR/extensions"
+
+# Directory-style extensions (subdirs with an index.ts) are linked whole, so
+# their node_modules and local config (e.g. mcp.json) travel with them.
+if find "$REPO_DIR/pi/extensions" -mindepth 2 -maxdepth 2 -name index.ts -type f | read -r _; then
+  echo "Extension dirs:"
+  find "$REPO_DIR/pi/extensions" -mindepth 2 -maxdepth 2 -name index.ts -type f | while read -r idx; do
+    dir="$(dirname "$idx")"
+    link_subdir "$dir" "$PI_DIR/extensions/$(basename "$dir")"
+  done
+fi
 
 echo "Keybindings:"
 link "$REPO_DIR/pi/keybindings.json" "$PI_DIR/keybindings.json"

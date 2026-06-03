@@ -157,12 +157,36 @@ interface Connection {
 	enabled: boolean; // whether this server's tools are exposed to the LLM
 }
 
+// The MCP SDK's getDefaultEnvironment() only forwards a small safelist (HOME,
+// PATH, USER, ...). On networks behind a TLS-inspecting proxy (e.g. Netskope,
+// Zscaler) the CA-bundle / proxy variables would be dropped, so the spawned
+// server can't validate TLS and dies with "UnknownIssuer". Forward the common
+// network/TLS variables from the parent process so corporate proxies work.
+const NETWORK_ENV_KEYS = [
+	"HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "NO_PROXY",
+	"http_proxy", "https_proxy", "all_proxy", "no_proxy",
+	"SSL_CERT_FILE", "SSL_CERT_DIR", "REQUESTS_CA_BUNDLE", "CURL_CA_BUNDLE",
+	"AWS_CA_BUNDLE", "NODE_EXTRA_CA_CERTS", "PIP_CERT",
+	"UV_SYSTEM_CERTS", "UV_NATIVE_TLS", "UV_INSECURE_HOST",
+	"LANG", "LC_ALL",
+];
+
+function networkEnv(): Record<string, string> {
+	const out: Record<string, string> = {};
+	for (const k of NETWORK_ENV_KEYS) {
+		const v = process.env[k];
+		if (v !== undefined) out[k] = v;
+	}
+	return out;
+}
+
 async function buildTransport(name: string, cfg: ServerConfig) {
 	if (cfg.command) {
 		return new StdioClientTransport({
 			command: cfg.command,
 			args: (cfg.args ?? []).map(expandEnv),
-			env: { ...getDefaultEnvironment(), ...expandRecord(cfg.env) },
+			// proxy/CA passthrough < SDK safelist < explicit per-server env
+			env: { ...networkEnv(), ...getDefaultEnvironment(), ...expandRecord(cfg.env) },
 			cwd: cfg.cwd ? expandEnv(cfg.cwd) : undefined,
 			stderr: "ignore",
 		});
