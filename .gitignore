@@ -32,6 +32,10 @@ id_ed25519
 id_ed25519.*
 *.pub
 
+# --- Python ---
+*.pyc
+__pycache__/
+
 # --- OS / editor cruft ---
 .DS_Store
 Thumbs.db

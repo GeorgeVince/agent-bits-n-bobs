@@ -38,6 +38,16 @@ link_dir "Agents"     "$REPO_DIR/pi/agents"     "*.md" "$PI_DIR/agents"
 link_dir "Prompts"    "$REPO_DIR/pi/prompts"     "*.md" "$PI_DIR/prompts"
 link_dir "Extensions" "$REPO_DIR/pi/extensions"  "*.ts" "$PI_DIR/extensions"
 
+# Skills are directories containing a SKILL.md; link each one whole so its
+# references/ and scripts/ travel with it.
+if [ -d "$REPO_DIR/pi/skills" ] && find "$REPO_DIR/pi/skills" -mindepth 2 -maxdepth 2 -name SKILL.md -type f | read -r _; then
+  echo "Skills:"
+  find "$REPO_DIR/pi/skills" -mindepth 2 -maxdepth 2 -name SKILL.md -type f | while read -r skill; do
+    dir="$(dirname "$skill")"
+    link_subdir "$dir" "$PI_DIR/skills/$(basename "$dir")"
+  done
+fi
+
 # Directory-style extensions (subdirs with an index.ts) are linked whole, so
 # their node_modules and local config (e.g. mcp.json) travel with them.
 if find "$REPO_DIR/pi/extensions" -mindepth 2 -maxdepth 2 -name index.ts -type f | read -r _; then
