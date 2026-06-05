@@ -1,0 +1,43 @@
+# --- Dependencies ---
+node_modules/
+
+# --- pi runtime / local config (may contain credentials) ---
+.pi/
+auth.json
+
+# --- MCP server configs (may contain inlined tokens) ---
+# The committed template is mcp.example.json; real configs are ignored.
+mcp.json
+mcp.local.json
+**/mcp.json
+!**/mcp.example.json
+
+# --- Secrets & env files ---
+.env
+.env.*
+!.env.example
+*.local
+secrets.*
+*.secret
+credentials*.json
+
+# --- Keys & certificates ---
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+*.pub
+
+# --- Python ---
+*.pyc
+__pycache__/
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
