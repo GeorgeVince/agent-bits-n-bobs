@@ -53,12 +53,52 @@ Claude-Desktop compatible `mcpServers` map. `${VAR}` / `$VAR` are expanded from 
 }
 ```
 
+## SigNoz observability server
+
+The [SigNoz MCP server](https://github.com/SigNoz/signoz-mcp-server) exposes your
+SigNoz metrics, traces, logs, alerts, dashboards and services as tools (e.g.
+`signoz_search_logs`, `signoz_query_metrics`, `signoz_list_services`).
+
+It needs to reach a SigNoz instance with an API key (Settings → API Keys, Admin only):
+
+```bash
+export SIGNOZ_URL="https://your-instance.signoz.cloud"   # or self-hosted URL
+export SIGNOZ_API_KEY="sk_..."
+```
+
+`mcp.example.json` ships three ways to run it; pick one (`signoz` via Docker is the
+default and is enabled, the other two are `disabled` alternatives):
+
+| Key | How | Needs |
+|-----|-----|-------|
+| `signoz` | Docker stdio (`signoz/signoz-mcp-server:latest`) | `docker` |
+| `signoz-binary` | Local `signoz-mcp-server` binary in stdio mode | the [binary](https://github.com/SigNoz/signoz-mcp-server/releases) on `PATH` |
+| `signoz-self-hosted-http` | Connect to a server you already run in HTTP mode | a reachable `http://host:8000/mcp` |
+
+The Docker image is pulled on first run, which can be slow enough to time out the
+initialize handshake — pre-warm it once with `docker pull signoz/signoz-mcp-server:latest`.
+
+**If you have a SigNoz API key, use the Docker `signoz` entry above — it's the
+simplest path.** It talks straight to your instance (`SIGNOZ_URL`), so the
+region of any hosted endpoint is irrelevant. See the
+[Environment Variables](https://github.com/SigNoz/signoz-mcp-server#environment-variables)
+docs for `LOG_LEVEL`, `SIGNOZ_CUSTOM_HEADERS`, etc.
+
+> **The hosted SigNoz Cloud endpoint (`https://mcp.<region>.signoz.cloud/mcp`) is
+> not supported here.** It requires an interactive OAuth browser flow that this
+> bridge doesn't implement. Run the self-hosted server (Docker/binary) pointed at
+> your SigNoz instance with an API key instead — which works for SigNoz Cloud
+> instances too, just with the key rather than a browser login.
+
 ## Usage
 
 - MCP tools are registered as `<server>_<tool>` (sanitized to lowercase/underscore),
-  e.g. `filesystem_read_file`.
+  e.g. `filesystem_read_file`. If a tool name already starts with the server name
+  the prefix isn't doubled, so the SigNoz server's tools stay `signoz_search_logs`,
+  `signoz_query_metrics`, … (not `signoz_signoz_…`).
 - `/mcp` — list connected servers.
 - `/mcp tools` — list every registered tool and the underlying MCP tool name.
+- `/mcp enable|disable|toggle <server>` — show/hide a connected server's tools.
 
 ## Notes
 

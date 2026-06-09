@@ -11,6 +11,32 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       }
     },
+    "signoz": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-e", "SIGNOZ_URL", "-e", "SIGNOZ_API_KEY", "signoz/signoz-mcp-server:latest"],
+      "env": {
+        "SIGNOZ_URL": "${SIGNOZ_URL}",
+        "SIGNOZ_API_KEY": "${SIGNOZ_API_KEY}"
+      }
+    },
+    "signoz-binary": {
+      "command": "signoz-mcp-server",
+      "args": [],
+      "env": {
+        "SIGNOZ_URL": "${SIGNOZ_URL}",
+        "SIGNOZ_API_KEY": "${SIGNOZ_API_KEY}",
+        "LOG_LEVEL": "info"
+      },
+      "disabled": true
+    },
+    "signoz-self-hosted-http": {
+      "url": "http://localhost:8000/mcp",
+      "type": "http",
+      "headers": {
+        "SIGNOZ-API-KEY": "${SIGNOZ_API_KEY}"
+      },
+      "disabled": true
+    },
     "example-remote": {
       "url": "https://mcp.example.com/mcp",
       "type": "http",

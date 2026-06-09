@@ -232,9 +232,18 @@ export default async function mcpBridge(pi: ExtensionAPI) {
 		const conn: Connection = { name, client, toolNames: [], enabled: true };
 		connections.set(name, conn);
 
+		const serverPrefix = sanitize(name);
 		const { tools } = await client.listTools();
 		for (const tool of tools) {
-			const piName = uniqueName(sanitize(`${name}_${tool.name}`));
+			// Namespace pi tool names with the server name, but don't double up when
+			// the server already namespaces its own tools (e.g. SigNoz exposes
+			// "signoz_search_logs" — keep that rather than "signoz_signoz_search_logs",
+			// which also matches the names referenced in the tools' own descriptions).
+			const toolName = sanitize(tool.name);
+			const base = toolName === serverPrefix || toolName.startsWith(`${serverPrefix}_`)
+				? toolName
+				: `${serverPrefix}_${toolName}`;
+			const piName = uniqueName(base);
 			conn.toolNames.push(piName);
 			toolRouting.set(piName, { conn, original: tool.name });
 
