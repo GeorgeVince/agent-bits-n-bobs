@@ -49,6 +49,10 @@
       },
       "disabled": true
     },
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"]
+    },
     "example-remote": {
       "url": "https://mcp.example.com/mcp",
       "type": "http",

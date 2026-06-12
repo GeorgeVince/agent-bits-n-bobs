@@ -117,6 +117,22 @@ If auth gets wedged ("internal server error"), clear it with `rm -rf ~/.mcp-auth
 headless use or a read-only restricted key. Set `LINEAR_API_KEY`, enable this
 entry and disable `linear`.
 
+## Notion
+
+Notion's hosted [remote MCP server](https://developers.notion.com/guides/mcp/get-started-with-mcp)
+lives at `https://mcp.notion.com/mcp` (Streamable HTTP, OAuth) and can read and
+write pages, databases and comments in your workspace, scoped by the access you
+grant during authorization. Like Linear, it's connected through `mcp-remote`,
+which handles the OAuth browser flow and caches tokens in `~/.mcp-auth`.
+Pre-authenticate once to avoid the browser flow racing pi's handshake timeout:
+
+```bash
+npx -y mcp-remote https://mcp.notion.com/mcp   # complete login, then Ctrl+C
+```
+
+(The open-source stdio `notion-mcp-server` package with an internal-integration
+token is deprecated — Notion recommends the hosted server.)
+
 ## Usage
 
 - MCP tools are registered as `<server>_<tool>` (sanitized to lowercase/underscore),
