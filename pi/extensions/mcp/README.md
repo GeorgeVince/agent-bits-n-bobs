@@ -90,6 +90,33 @@ docs for `LOG_LEVEL`, `SIGNOZ_CUSTOM_HEADERS`, etc.
 > your SigNoz instance with an API key instead — which works for SigNoz Cloud
 > instances too, just with the key rather than a browser login.
 
+## Linear
+
+Linear hosts a [remote MCP server](https://linear.app/docs/mcp) at
+`https://mcp.linear.app/mcp` (Streamable HTTP, OAuth 2.1) with tools for
+finding, creating and updating issues, projects and comments. Two ways to
+connect; `mcp.example.json` ships both:
+
+| Key | How | Needs |
+|-----|-----|-------|
+| `linear` | stdio via [`mcp-remote`](https://github.com/geelen/mcp-remote), which handles the OAuth browser flow | one-time browser login |
+| `linear-api-key` | direct HTTP with `Authorization: Bearer` | `LINEAR_API_KEY` ([Security & Access](https://linear.app/settings/account/security) → API keys) |
+
+**OAuth (`linear`, default):** the first connection opens a browser to authorize;
+tokens are cached in `~/.mcp-auth` so later startups are silent. To avoid the
+browser flow racing pi's initialize-handshake timeout, pre-authenticate once
+from a terminal:
+
+```bash
+npx -y mcp-remote https://mcp.linear.app/mcp   # complete login, then Ctrl+C
+```
+
+If auth gets wedged ("internal server error"), clear it with `rm -rf ~/.mcp-auth`.
+
+**API key (`linear-api-key`):** no browser, no child process — good for
+headless use or a read-only restricted key. Set `LINEAR_API_KEY`, enable this
+entry and disable `linear`.
+
 ## Usage
 
 - MCP tools are registered as `<server>_<tool>` (sanitized to lowercase/underscore),

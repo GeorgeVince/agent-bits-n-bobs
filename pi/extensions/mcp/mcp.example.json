@@ -37,6 +37,18 @@
       },
       "disabled": true
     },
+    "linear": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.linear.app/mcp"]
+    },
+    "linear-api-key": {
+      "url": "https://mcp.linear.app/mcp",
+      "type": "http",
+      "headers": {
+        "Authorization": "Bearer ${LINEAR_API_KEY}"
+      },
+      "disabled": true
+    },
     "example-remote": {
       "url": "https://mcp.example.com/mcp",
       "type": "http",
