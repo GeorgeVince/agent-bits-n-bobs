@@ -112,9 +112,9 @@ The most ambitious type. Draw the mechanism, not a diagram about it.
 
 Before saving/opening a diagram:
 
-- Estimate every label width using 14px ≈ 8px/char and 12px ≈ 7px/char.
-- Ensure each node title/subtitle fits within the rectangle minus 24px horizontal padding.
-- Split callout text manually into multiple `<text>` lines; SVG text does not wrap.
+- Estimate every boxed text line width using 14px ≈ 8px/char and 12px ≈ 7px/char.
+- For every `<text>` inside or visually belonging to a box, verify: `estimatedTextWidth <= boxWidth - 2*padding`. Use at least 20-24px total horizontal padding.
+- Split callout text manually into multiple `<text>` lines; SVG text does not wrap. Never rely on clipping or overflow behavior.
 - Keep connector labels in whitespace beside the connector, not directly over arrowheads or node borders.
 - Keep every label at least 8-10px away from unrelated strokes.
 - If any label collides, shorten the label first; then increase spacing or reroute the arrow.
