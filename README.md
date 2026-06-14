@@ -8,7 +8,7 @@ Personal [pi](https://github.com/earendil-works/pi-mono) configuration, shipped 
 ```
 pi/
 ├── extensions/   # exit, last-screenshot, mcp (Model Context Protocol bridge)
-├── skills/       # aws-architecture-diagram
+├── skills/       # summarize, visualise
 ├── prompts/      # getlogs, getstatus
 └── keybindings.json
 ```
@@ -47,6 +47,11 @@ pi config               # TUI to enable/disable individual extensions, skills, p
 pi update               # refresh
 pi remove "$PWD"        # uninstall (use the same source you installed with)
 ```
+
+## Skills
+
+- `summarize`: converts URLs and documents to Markdown.
+- `visualise`: generates SVG/HTML visual fragments and wraps them as standalone local HTML files via `pi/skills/visualise/render-visual.mjs`.
 
 ## MCP extension
 
