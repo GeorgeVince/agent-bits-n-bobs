@@ -10,7 +10,8 @@ pi/
 ├── extensions/   # exit, last-screenshot, mcp (Model Context Protocol bridge)
 ├── skills/       # summarize, visualise
 ├── prompts/      # getlogs, getstatus
-└── keybindings.json
+├── keybindings.json
+└── sandbox.json  # pi-sandbox policy symlinked into ~/.pi/agent
 ```
 
 The root `package.json` declares these under its `pi` manifest, so pi loads them
@@ -24,9 +25,8 @@ cd agent-bits-n-bobs
 ./setup.sh
 ```
 
-`setup.sh` runs `npm install` (for the mcp extension's SDK), registers the repo as a
-pi package via `pi install`, and symlinks `keybindings.json` (the one thing that isn't a
-package resource).
+`setup.sh` runs `npm install` (for the mcp extension's SDK and pi-sandbox), registers the repo as a
+pi package via `pi install`, and symlinks `keybindings.json` plus `sandbox.json` (resources pi packages don't carry directly).
 
 By hand, the equivalent is:
 
@@ -34,6 +34,7 @@ By hand, the equivalent is:
 npm install
 pi install "$PWD"          # or: pi install git:github.com/<you>/agent-bits-n-bobs
 ln -sfn "$PWD/pi/keybindings.json" ~/.pi/agent/keybindings.json
+ln -sfn "$PWD/pi/sandbox.json" ~/.pi/agent/sandbox.json
 ```
 
 Use `pi install "$PWD" -l` to install into a project's `.pi/settings.json` instead of
@@ -52,6 +53,18 @@ pi remove "$PWD"        # uninstall (use the same source you installed with)
 
 - `summarize`: converts URLs and documents to Markdown.
 - `visualise`: generates SVG/HTML visual fragments and wraps them as standalone local HTML files via `pi/skills/visualise/render-visual.mjs`.
+
+## Sandbox
+
+This config includes [`pi-sandbox`](https://github.com/carderne/pi-sandbox) via `pi/extensions/sandbox.ts` and ships a conservative default policy in `pi/sandbox.json`.
+
+- Sandbox is enabled by default.
+- Current project and `/tmp` reads/writes are allowed.
+- Package-manager/cache paths needed by common tools are allowed.
+- Secrets (`.env*`, `*.pem`, `*.key`, common SSH private key names) are hard-blocked for writes.
+- Unknown network domains prompt for approval.
+
+Use `/sandbox` inside pi to inspect the effective policy, or launch with `pi --no-sandbox` to disable for a session.
 
 ## MCP extension
 

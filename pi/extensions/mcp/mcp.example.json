@@ -53,6 +53,12 @@
       "command": "npx",
       "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"]
     },
+    "sentry": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.sentry.dev/mcp"],
+      "description": "Sentry tools for organizations, projects, issues, events, releases, performance, and debugging production errors.",
+      "autoEnable": false
+    },
     "example-remote": {
       "url": "https://mcp.example.com/mcp",
       "type": "http",

@@ -133,6 +133,22 @@ npx -y mcp-remote https://mcp.notion.com/mcp   # complete login, then Ctrl+C
 (The open-source stdio `notion-mcp-server` package with an internal-integration
 token is deprecated — Notion recommends the hosted server.)
 
+## Sentry
+
+Sentry hosts a [remote MCP server](https://mcp.sentry.dev/?transport=cloud) for
+cloud OAuth at `https://mcp.sentry.dev/mcp`. It exposes Sentry organizations,
+projects, issues, events, releases, and debugging context. This bridge connects
+through `mcp-remote`, which handles the OAuth browser flow and caches tokens in
+`~/.mcp-auth`.
+
+Pre-authenticate once to avoid the browser flow racing pi's handshake timeout:
+
+```bash
+npx -y mcp-remote https://mcp.sentry.dev/mcp   # complete login, then Ctrl+C
+```
+
+Then in pi use `/mcp enable sentry`, or access it lazily with the gateway tools.
+
 ## Usage
 
 - MCP tools are registered as `<server>_<tool>` (sanitized to lowercase/underscore),

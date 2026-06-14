@@ -1,0 +1,87 @@
+{
+  "enabled": true,
+  "network": {
+    "allowLocalBinding": true,
+    "allowAllUnixSockets": true,
+    "allowedDomains": [
+      "github.com",
+      "*.github.com",
+      "api.github.com",
+      "raw.githubusercontent.com",
+      "objects.githubusercontent.com",
+      "npmjs.org",
+      "*.npmjs.org",
+      "registry.npmjs.org",
+      "registry.yarnpkg.com",
+      "pypi.org",
+      "*.pypi.org",
+      "files.pythonhosted.org",
+      "docs.aws.amazon.com",
+      "*.docs.aws.amazon.com",
+      "aws.amazon.com",
+      "*.aws.amazon.com",
+      "mcp.linear.app",
+      "linear.app",
+      "api.linear.app",
+      "mcp.notion.com",
+      "api.notion.com",
+      "notion.com",
+      "www.notion.so",
+      "mcp.sentry.dev",
+      "sentry.io",
+      "*.sentry.io",
+      "signoz.cloud",
+      "*.signoz.cloud",
+      "signoz.io",
+      "*.signoz.io",
+      "localhost",
+      "127.0.0.1"
+    ],
+    "deniedDomains": []
+  },
+  "filesystem": {
+    "denyRead": [
+      "/Users",
+      "/home"
+    ],
+    "allowRead": [
+      ".",
+      "/tmp",
+      "~/.config",
+      "~/.local",
+      "~/.cache",
+      "~/.cache/uv",
+      "~/.npm",
+      "~/.mcp-auth",
+      "~/.docker",
+      "~/.pi",
+      "~/.gitconfig",
+      "~/.gitignore_global",
+      "~/.ssh/config",
+      "~/Library/Caches"
+    ],
+    "allowWrite": [
+      ".",
+      "/tmp",
+      "~/.cache",
+      "~/.cache/uv",
+      "~/.npm",
+      "~/.mcp-auth",
+      "~/.docker",
+      "~/.pi",
+      "~/Library/Caches"
+    ],
+    "denyWrite": [
+      ".env",
+      ".env.*",
+      "*.pem",
+      "*.key",
+      "id_rsa",
+      "id_ed25519",
+      "~/.ssh/id_rsa",
+      "~/.ssh/id_ed25519",
+      "~/.ssh/*.pem",
+      "~/.ssh/*.key"
+    ]
+  }
+}

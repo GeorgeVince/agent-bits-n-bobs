@@ -7,20 +7,20 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 PI_DIR="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
 
-# 1. Install runtime deps (the mcp extension needs @modelcontextprotocol/sdk).
-if [ ! -d "$REPO_DIR/node_modules" ]; then
-  echo "Installing npm dependencies ..."
-  (cd "$REPO_DIR" && npm install)
-fi
+# 1. Install/sync runtime deps (mcp extension SDK, pi-sandbox, etc.).
+echo "Installing npm dependencies ..."
+(cd "$REPO_DIR" && npm install)
 
 # 2. Register the repo as a pi package. Idempotent: re-running just updates settings.
 echo "Registering pi package ..."
 pi install "$REPO_DIR"
 
-# 3. Keybindings are not a pi package resource, so symlink the file directly.
+# 3. Keybindings and sandbox.json are not pi package resources, so symlink them directly.
 mkdir -p "$PI_DIR"
 ln -sfn "$REPO_DIR/pi/keybindings.json" "$PI_DIR/keybindings.json"
 echo "Linked keybindings.json -> $PI_DIR/keybindings.json"
+ln -sfn "$REPO_DIR/pi/sandbox.json" "$PI_DIR/sandbox.json"
+echo "Linked sandbox.json -> $PI_DIR/sandbox.json"
 
 cat <<EOF
 
@@ -30,5 +30,5 @@ Done. Manage everything with pi's native commands:
   pi update               # refresh
   pi remove "$REPO_DIR"   # uninstall
 
-Run pi and type /reload to apply.
+Run pi and type /reload to apply. Use /sandbox to inspect the sandbox config.
 EOF
