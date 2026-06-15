@@ -39,6 +39,7 @@
       "~/.mcp-auth",
       "~/.docker",
       "~/.pi",
+      "~/Library/Keychains",
       "~/.gitconfig",
       "~/.gitignore_global",
       "~/.ssh/config",
