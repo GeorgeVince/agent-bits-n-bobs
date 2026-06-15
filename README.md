@@ -7,7 +7,7 @@ Personal [pi](https://github.com/earendil-works/pi-mono) configuration, shipped 
 
 ```
 pi/
-├── extensions/   # exit, last-screenshot, mcp (Model Context Protocol bridge)
+├── extensions/   # exit, last-screenshot, mcp, visual-preview
 ├── skills/       # summarize, visualise
 ├── prompts/      # getlogs, getstatus
 ├── keybindings.json
@@ -52,7 +52,7 @@ pi remove "$PWD"        # uninstall (use the same source you installed with)
 ## Skills
 
 - `summarize`: converts URLs and documents to Markdown.
-- `visualise`: generates SVG/HTML visual fragments and wraps them as standalone local HTML files via `pi/skills/visualise/render-visual.mjs`.
+- `visualise`: generates SVG/HTML visual fragments, wraps them as standalone local HTML files via `pi/skills/visualise/render-visual.mjs`, and opens them with the host-side `visual_preview` tool so previews still work with `pi-sandbox` enabled.
 
 ## Sandbox
 
@@ -65,6 +65,8 @@ This config includes [`pi-sandbox`](https://github.com/carderne/pi-sandbox) via 
 - Unknown network domains prompt for approval.
 
 Use `/sandbox` inside pi to inspect the effective policy, or launch with `pi --no-sandbox` to disable for a session.
+
+Generated visual previews should be opened with the `visual_preview` tool or `/visual-preview` command, not shell `open`, because bash runs inside the OS sandbox.
 
 ## MCP extension
 

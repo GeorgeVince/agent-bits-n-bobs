@@ -31,6 +31,7 @@
     "allowRead": [
       ".",
       "/tmp",
+      "/private/tmp",
       "~/.config",
       "~/.local",
       "~/.cache",
@@ -39,15 +40,18 @@
       "~/.mcp-auth",
       "~/.docker",
       "~/.pi",
+      "~/dev/agent-bits-n-bobs",
       "~/Library/Keychains",
       "~/.gitconfig",
       "~/.gitignore_global",
       "~/.ssh/config",
-      "~/Library/Caches"
+      "~/Library/Caches",
+      "~/.nvm"
     ],
     "allowWrite": [
       ".",
       "/tmp",
+      "/private/tmp",
       "~/.cache",
       "~/.cache/uv",
       "~/.npm",

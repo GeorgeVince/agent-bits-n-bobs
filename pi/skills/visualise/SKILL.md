@@ -90,16 +90,21 @@ Default behavior for any diagram/visual request in pi:
 node validate-svg-text.mjs /path/to/project/.pi/visuals/system-map.fragment.html
 ```
 
-4. Render and open a local standalone webpage:
+4. Render a local standalone webpage:
 
 ```bash
 node render-visual.mjs /path/to/project/.pi/visuals/system-map.fragment.html \
   --out /path/to/project/.pi/visuals/system-map.html \
-  --title "System map" \
-  --open
+  --title "System map"
 ```
 
-Do this by default. Do not merely output a `visualizer` code fence unless the user specifically asks for raw client-renderer output.
+5. Open the preview with the host-side `visual_preview` tool:
+
+```json
+{ "path": ".pi/visuals/system-map.html" }
+```
+
+Do this by default. `visual_preview` is intentionally used instead of `render-visual.mjs --open` or bash `open` because it works when `pi-sandbox` is enabled. If the tool is unavailable, tell the user the generated HTML path and only use `--open` when sandboxing is disabled.
 
 Options:
 
