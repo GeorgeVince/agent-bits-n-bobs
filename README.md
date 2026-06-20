@@ -25,7 +25,7 @@ cd agent-bits-n-bobs
 ./setup.sh
 ```
 
-`setup.sh` runs `npm install` (for the mcp extension's SDK and pi-sandbox), registers the repo as a
+`setup.sh` runs `npm install` (for the mcp extension's SDK, pi-sandbox, and bundled package dependencies like Ponytail), registers the repo as a
 pi package via `pi install`, and symlinks `keybindings.json` plus `sandbox.json` (resources pi packages don't carry directly).
 
 By hand, the equivalent is:
@@ -53,6 +53,7 @@ pi remove "$PWD"        # uninstall (use the same source you installed with)
 
 - `summarize`: converts URLs and documents to Markdown.
 - `visualise`: generates SVG/HTML visual fragments, wraps them as standalone local HTML files via `pi/skills/visualise/render-visual.mjs`, and opens them with the host-side `visual_preview` tool so previews still work with `pi-sandbox` enabled.
+- `ponytail`: installed from `DietrichGebert/ponytail` via `package.json` and loaded through this package's Pi manifest.
 
 ## Sandbox
 

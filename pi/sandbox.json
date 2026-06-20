@@ -45,6 +45,7 @@
       "~/.gitconfig",
       "~/.gitignore_global",
       "~/.ssh/config",
+      "~/.gnupg",
       "~/Library/Caches",
       "~/.nvm"
     ],
@@ -58,6 +59,7 @@
       "~/.mcp-auth",
       "~/.docker",
       "~/.pi",
+      "~/.gnupg",
       "~/Library/Caches"
     ],
     "denyWrite": [
