@@ -18,6 +18,7 @@
       "*.sentry.io",
       "*.signoz.cloud",
       "*.signoz.io",
+      "*.amazonaws.com",
       "localhost",
       "127.0.0.1"
     ],
@@ -40,6 +41,8 @@
       "~/.mcp-auth",
       "~/.docker",
       "~/.pi",
+      "~/.nine",
+      "~/bin/nine",
       "~/dev/agent-bits-n-bobs",
       "~/Library/Keychains",
       "~/.gitconfig",
