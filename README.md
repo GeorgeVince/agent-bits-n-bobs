@@ -10,8 +10,9 @@ pi/
 ├── extensions/   # exit, last-screenshot, mcp, visual-preview
 ├── skills/       # summarize, visualise
 ├── prompts/      # getlogs, getstatus
+├── AGENTS.md           # global instructions, symlinked into ~/.pi/agent
 ├── keybindings.json
-└── sandbox.json  # pi-sandbox policy symlinked into ~/.pi/agent
+└── sandbox.json         # pi-sandbox policy symlinked into ~/.pi/agent
 ```
 
 The root `package.json` declares these under its `pi` manifest, so pi loads them
@@ -26,13 +27,14 @@ cd agent-bits-n-bobs
 ```
 
 `setup.sh` runs `npm install` (for the mcp extension's SDK, pi-sandbox, and bundled package dependencies like Ponytail), registers the repo as a
-pi package via `pi install`, and symlinks `keybindings.json` plus `sandbox.json` (resources pi packages don't carry directly).
+pi package via `pi install`, and symlinks `AGENTS.md`, `keybindings.json`, and `sandbox.json` (resources pi packages don't carry directly).
 
 By hand, the equivalent is:
 
 ```bash
 npm install
 pi install "$PWD"          # or: pi install git:github.com/<you>/agent-bits-n-bobs
+ln -sfn "$PWD/pi/AGENTS.md" ~/.pi/agent/AGENTS.md
 ln -sfn "$PWD/pi/keybindings.json" ~/.pi/agent/keybindings.json
 ln -sfn "$PWD/pi/sandbox.json" ~/.pi/agent/sandbox.json
 ```

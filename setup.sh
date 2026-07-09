@@ -15,12 +15,12 @@ echo "Installing npm dependencies ..."
 echo "Registering pi package ..."
 pi install "$REPO_DIR"
 
-# 3. Keybindings and sandbox.json are not pi package resources, so symlink them directly.
+# 3. These files are not pi package resources, so symlink them directly.
 mkdir -p "$PI_DIR"
-ln -sfn "$REPO_DIR/pi/keybindings.json" "$PI_DIR/keybindings.json"
-echo "Linked keybindings.json -> $PI_DIR/keybindings.json"
-ln -sfn "$REPO_DIR/pi/sandbox.json" "$PI_DIR/sandbox.json"
-echo "Linked sandbox.json -> $PI_DIR/sandbox.json"
+for file in AGENTS.md keybindings.json sandbox.json; do
+  ln -sfn "$REPO_DIR/pi/$file" "$PI_DIR/$file"
+  echo "Linked $file -> $PI_DIR/$file"
+done
 
 cat <<EOF
 
