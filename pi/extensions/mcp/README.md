@@ -133,6 +133,22 @@ npx -y mcp-remote https://mcp.notion.com/mcp   # complete login, then Ctrl+C
 (The open-source stdio `notion-mcp-server` package with an internal-integration
 token is deprecated — Notion recommends the hosted server.)
 
+## Figma Desktop
+
+Figma Desktop exposes design context, screenshots, variables, metadata, and Code
+Connect tools locally at `http://127.0.0.1:3845/mcp`. The example config includes
+this as `figma-desktop` using Streamable HTTP.
+
+1. Use a Dev or Full seat on a paid Figma plan.
+2. Open the design file in the latest Figma desktop app.
+3. Switch to Dev Mode (`Shift+D`), find the MCP section, and enable the desktop
+   MCP server.
+4. Keep Figma and the file open, then access it lazily through the MCP gateway
+   tools or run `/mcp enable figma-desktop`.
+
+The hosted Figma MCP server is not configured because Figma currently restricts
+its OAuth flow to clients in the Figma MCP Catalog.
+
 ## Sentry
 
 Sentry hosts a [remote MCP server](https://mcp.sentry.dev/?transport=cloud) for

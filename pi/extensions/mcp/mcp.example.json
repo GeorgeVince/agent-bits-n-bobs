@@ -53,6 +53,12 @@
       "command": "npx",
       "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"]
     },
+    "figma-desktop": {
+      "url": "http://127.0.0.1:3845/mcp",
+      "type": "http",
+      "description": "Local Figma Desktop design context for the currently open file.",
+      "autoEnable": false
+    },
     "sentry": {
       "command": "npx",
       "args": ["-y", "mcp-remote", "https://mcp.sentry.dev/mcp"],
