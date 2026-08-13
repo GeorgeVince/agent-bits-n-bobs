@@ -43,7 +43,7 @@
       "~/.pi",
       "~/.nine",
       "~/bin/nine",
-      "~/dev/*",
+      "~/dev",
       "~/Library/Keychains",
       "~/.gitconfig",
       "~/.gitignore_global",
