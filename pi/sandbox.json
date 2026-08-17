@@ -48,6 +48,7 @@
       "~/.gitconfig",
       "~/.gitignore_global",
       "~/.ssh/config",
+      "~/.ssh/known_hosts",
       "~/.gnupg",
       "~/Library/Caches",
       "~/.nvm"
