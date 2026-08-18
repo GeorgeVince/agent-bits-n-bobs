@@ -26,13 +26,12 @@ cd agent-bits-n-bobs
 ./setup.sh
 ```
 
-`setup.sh` runs `npm install` (for the mcp extension's SDK, pi-sandbox, and bundled package dependencies like Ponytail), registers the repo as a
-pi package via `pi install`, and symlinks `AGENTS.md`, `keybindings.json`, and `sandbox.json` (resources pi packages don't carry directly).
+`setup.sh` runs `pnpm --recursive update --latest` (with a five-day package cooldown), registers the repo as a pi package via `pi install`, and symlinks `AGENTS.md`, `keybindings.json`, and `sandbox.json` (resources pi packages don't carry directly).
 
 By hand, the equivalent is:
 
 ```bash
-npm install
+pnpm --recursive update --latest
 pi install "$PWD"          # or: pi install git:github.com/<you>/agent-bits-n-bobs
 ln -sfn "$PWD/pi/AGENTS.md" ~/.pi/agent/AGENTS.md
 ln -sfn "$PWD/pi/keybindings.json" ~/.pi/agent/keybindings.json

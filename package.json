@@ -4,6 +4,7 @@
   "description": "George's pi coding agent extensions, skills, prompts, and keybindings.",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@10.34.3",
   "keywords": [
     "pi-package",
     "pi-extension",
@@ -23,9 +24,9 @@
     ]
   },
   "dependencies": {
-    "@earendil-works/pi-tui": "^0.78.1",
-    "@modelcontextprotocol/sdk": "^1.12.0",
-    "pi-sandbox": "^0.4.3",
+    "@earendil-works/pi-tui": "^0.84.1",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "pi-sandbox": "^0.6.3",
     "ponytail": "https://github.com/DietrichGebert/ponytail/archive/refs/tags/v4.7.0.tar.gz"
   },
   "peerDependencies": {

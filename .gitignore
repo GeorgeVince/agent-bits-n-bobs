@@ -1,5 +1,6 @@
 # --- Dependencies ---
 node_modules/
+.pnpm-store/
 
 # --- pi runtime / local config (may contain credentials) ---
 .pi/

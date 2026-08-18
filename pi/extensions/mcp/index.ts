@@ -40,7 +40,7 @@
  *
  * Env references ${VAR} / $VAR inside strings are expanded from process.env.
  *
- * Requires `npm install` in this directory (pulls in @modelcontextprotocol/sdk).
+ * Requires `pnpm install` at the repository root (pulls in @modelcontextprotocol/sdk).
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";

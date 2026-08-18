@@ -1,0 +1,5 @@
+packages:
+  - pi/extensions/mcp
+
+# Ignore package versions published less than five days ago.
+minimumReleaseAge: 7200

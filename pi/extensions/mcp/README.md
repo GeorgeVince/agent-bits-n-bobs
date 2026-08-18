@@ -10,8 +10,7 @@ tool the LLM can call.
 1. Install dependencies (once):
 
    ```bash
-   cd extensions/mcp
-   npm install
+   pnpm install
    ```
 
 2. Create an `mcp.json` config. The extension looks in these places (first match wins):
