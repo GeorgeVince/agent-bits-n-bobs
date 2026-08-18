@@ -1,9 +1,13 @@
 ---
 name: visualise
-description: "Render inline interactive visuals — SVG diagrams, HTML widgets, charts, and explainers — directly in the conversation. Use this skill whenever the user asks to visualize, diagram, chart, illustrate, or explain something visually, or when an explanation would genuinely benefit from a spatial/interactive diagram rather than text. Also triggers for: flowcharts, architecture diagrams, data visualizations, interactive explainers, comparison layouts, UI mockups, and any request containing 'show me', 'draw', 'map out', 'visualize', or 'diagram'. Even when the user doesn't explicitly ask for a visual, use this skill proactively when the topic has spatial, sequential, or systemic relationships that a diagram would clarify better than prose."
+description: "Render diagrams, charts, and other visual output. Use only when the user explicitly asks for a diagram, chart, visualization, illustration, UI mockup, or other graphical output. Do not use for ordinary requests to explain, compare, show, map out, or walk through something unless the user specifically requests a visual format."
 ---
 
 # Inline Visualizer
+
+## Invocation gate
+
+Use this skill only when the user explicitly requests graphical or visual output. Prefer a normal text response when they merely ask to explain, compare, show, map out, or walk through something. If the requested format is ambiguous, respond in text; do not ask whether they want a diagram.
 
 Render rich visual content — SVG diagrams, HTML interactive widgets, charts — directly inline in a chat conversation. Output streams token-by-token into a sandboxed iframe. The result feels like a natural extension of the conversation, not an attachment.
 
@@ -56,16 +60,16 @@ The local HTML wrapper defines `sendPrompt(text)` as a browser shim that logs an
 
 Route on the verb, not the noun. The same subject gets different treatment depending on what was asked:
 
-| User says | Type | What to build |
-|-----------|------|---------------|
-| "how does X work" | Illustrative diagram | Spatial metaphor showing the mechanism |
-| "what are the components of X" | Structural diagram | Labelled boxes showing containment |
-| "walk me through the steps" | Flowchart | Sequential boxes and arrows |
-| "compare X vs Y" | Comparison layout | Side-by-side cards with metrics |
-| "show me the data" | Chart | Chart.js or inline data viz |
-| "explain X" (spatial concept) | Interactive explainer | Sliders, controls, live state |
+| User explicitly asks for | Type | What to build |
+|---------------------------|------|---------------|
+| "a diagram of how X works" | Illustrative diagram | Spatial metaphor showing the mechanism |
+| "a component diagram of X" | Structural diagram | Labelled boxes showing containment |
+| "a flowchart of the steps" | Flowchart | Sequential boxes and arrows |
+| "a visual comparison of X vs Y" | Comparison layout | Side-by-side cards with metrics |
+| "a chart of the data" | Chart | Chart.js or inline data viz |
+| "an interactive visual explanation of X" | Interactive explainer | Sliders, controls, live state |
 
-Default to illustrative for "how does X work" — it's the more ambitious choice. Don't retreat to a flowchart because it feels safer.
+Choose the least elaborate visual type that satisfies the explicit request.
 
 ## Multiple visuals per response
 
