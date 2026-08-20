@@ -55,6 +55,7 @@ pi remove "$PWD"        # uninstall (use the same source you installed with)
 - `summarize`: converts URLs and documents to Markdown.
 - `visualise`: generates SVG/HTML visual fragments, wraps them as standalone local HTML files via `pi/skills/visualise/render-visual.mjs`, and opens them with the host-side `visual_preview` tool so previews still work with `pi-sandbox` enabled.
 - `ponytail`: installed from `DietrichGebert/ponytail` via `package.json` and loaded through this package's Pi manifest.
+- Matt Pocock's stable engineering and productivity skills: installed from `mattpocock/skills` via `package.json`. Run `/skill:setup-matt-pocock-skills` once in each repo before using its engineering workflow.
 
 ## Sandbox
 
