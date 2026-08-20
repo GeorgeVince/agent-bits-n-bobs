@@ -1,5 +1,6 @@
 {
   "enabled": true,
+  "allowBrowserProcess": true,
   "network": {
     "allowLocalBinding": true,
     "allowAllUnixSockets": true,
@@ -10,7 +11,8 @@
       "registry.yarnpkg.com",
       "*.pypi.org",
       "*.pythonhosted.org",
-      "*.aws.amazon.com",
+      "api.openai.com",
+      "docs.aws.amazon.com",
       "*.linear.app",
       "*.notion.com",
       "*.notion.so",
@@ -18,11 +20,14 @@
       "*.sentry.io",
       "*.signoz.cloud",
       "*.signoz.io",
-      "*.amazonaws.com",
       "localhost",
       "127.0.0.1"
     ],
-    "deniedDomains": []
+    "deniedDomains": [
+      "*.amazonaws.com",
+      "*.amazonaws.com.cn",
+      "*.api.aws"
+    ]
   },
   "filesystem": {
     "denyRead": [
@@ -41,6 +46,7 @@
       "~/.mcp-auth",
       "~/.docker",
       "~/.pi",
+      "~/.herdr/worktrees",
       "~/.nine",
       "~/bin/nine",
       "~/dev",
@@ -55,6 +61,7 @@
     ],
     "allowWrite": [
       ".",
+      "~/dev",
       "/tmp",
       "/private/tmp",
       "~/.cache",
@@ -63,6 +70,7 @@
       "~/.mcp-auth",
       "~/.docker",
       "~/.pi",
+      "~/.herdr/worktrees",
       "~/.gnupg",
       "~/Library/Caches"
     ],
