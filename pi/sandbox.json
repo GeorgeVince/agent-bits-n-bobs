@@ -13,6 +13,8 @@
       "*.pythonhosted.org",
       "api.openai.com",
       "docs.aws.amazon.com",
+      "aws.amazon.com",
+      "*.awsstatic.com",
       "*.linear.app",
       "*.notion.com",
       "*.notion.so",
