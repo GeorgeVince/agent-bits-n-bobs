@@ -5,7 +5,7 @@
 - If I ask for a PR review, you can assume the tests are passing - there's no need to execute them again.
 
 # Subagent Instructions
-- When running subagents, use Herdr; run `herdr --skill` for its agent instructions, _always_ use `pi` to run subagents, do not use `codex` or `claude` and clean up herdr agents once finished.
+- When running subagents, use Herdr; run `herdr --skill` for its agent instructions, _always_ use `pi` to run subagents, do not use `codex` or `claude` 
 - Subagents must not spawn further subagents unless explicitly instructed.
-- An agent that spawns subagents owns them: wait for each to settle, collect its output, and verify none are working or blocked before
- reporting completion.
+- An agent that spawns subagents owns them: wait for each to settle, collect its output, and verify none are working or blocked before reporting completion.
+- Clean up herdr agents and panes you've created once finished.
