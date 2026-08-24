@@ -26,7 +26,7 @@ cd agent-bits-n-bobs
 ./setup.sh
 ```
 
-`setup.sh` runs `pnpm --recursive update --latest` (with a five-day package cooldown), registers the repo as a pi package via `pi install`, and symlinks `AGENTS.md`, `keybindings.json`, and `sandbox.json` (resources pi packages don't carry directly).
+`setup.sh` runs `pnpm --recursive update --latest` (with a five-day package cooldown), registers the repo as a pi package via `pi install`, and symlinks profile-level config that pi packages don't carry directly.
 
 By hand, the equivalent is:
 
@@ -36,6 +36,8 @@ pi install "$PWD"          # or: pi install git:github.com/<you>/agent-bits-n-bo
 ln -sfn "$PWD/pi/AGENTS.md" ~/.pi/agent/AGENTS.md
 ln -sfn "$PWD/pi/keybindings.json" ~/.pi/agent/keybindings.json
 ln -sfn "$PWD/pi/sandbox.json" ~/.pi/agent/sandbox.json
+mkdir -p ~/.pi/agent/extensions
+ln -sfn "$PWD/pi/extensions/pi-autoresearch.json" ~/.pi/agent/extensions/pi-autoresearch.json
 ```
 
 Use `pi install "$PWD" -l` to install into a project's `.pi/settings.json` instead of
@@ -55,6 +57,7 @@ pi remove "$PWD"        # uninstall (use the same source you installed with)
 - `summarize`: converts URLs and documents to Markdown.
 - `visualise`: generates SVG/HTML visual fragments, wraps them as standalone local HTML files via `pi/skills/visualise/render-visual.mjs`, and opens them with the host-side `visual_preview` tool so previews still work with `pi-sandbox` enabled.
 - `ponytail`: installed from `DietrichGebert/ponytail` via `package.json` and loaded through this package's Pi manifest.
+- `pi-autoresearch`: autonomous optimization loops; start one with `/skill:autoresearch-create`.
 - Matt Pocock's stable engineering and productivity skills: installed from `mattpocock/skills` via `package.json`. Run `/skill:setup-matt-pocock-skills` once in each repo before using its engineering workflow.
 
 ## Sandbox

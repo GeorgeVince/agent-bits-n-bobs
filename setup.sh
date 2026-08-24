@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Registers this repo as a pi package (native add/remove/toggle via pi commands)
-# and links the one resource pi packages can't carry: keybindings.json.
+# and links config files that pi packages can't carry.
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 PI_DIR="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
@@ -21,6 +21,10 @@ for file in AGENTS.md keybindings.json sandbox.json; do
   ln -sfn "$REPO_DIR/pi/$file" "$PI_DIR/$file"
   echo "Linked $file -> $PI_DIR/$file"
 done
+
+mkdir -p "$PI_DIR/extensions"
+ln -sfn "$REPO_DIR/pi/extensions/pi-autoresearch.json" "$PI_DIR/extensions/pi-autoresearch.json"
+echo "Linked pi-autoresearch.json -> $PI_DIR/extensions/pi-autoresearch.json"
 
 cat <<EOF
 

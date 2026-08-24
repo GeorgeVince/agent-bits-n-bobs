@@ -13,11 +13,13 @@
   "pi": {
     "extensions": [
       "./pi/extensions",
-      "./node_modules/ponytail/pi-extension/index.js"
+      "./node_modules/ponytail/pi-extension/index.js",
+      "./node_modules/pi-autoresearch/extensions"
     ],
     "skills": [
       "./pi/skills",
       "./node_modules/ponytail/skills",
+      "./node_modules/pi-autoresearch/skills",
       "./node_modules/mattpocock-skills/skills/engineering/*/SKILL.md",
       "./node_modules/mattpocock-skills/skills/productivity/*/SKILL.md"
     ],
@@ -29,6 +31,7 @@
     "@earendil-works/pi-tui": "^0.84.1",
     "@modelcontextprotocol/sdk": "^1.30.0",
     "mattpocock-skills": "github:mattpocock/skills#v1.2.3",
+    "pi-autoresearch": "^1.6.2",
     "pi-sandbox": "^0.6.3",
     "ponytail": "github:DietrichGebert/ponytail#v4.7.0"
   },
