@@ -31,6 +31,8 @@
     "@earendil-works/pi-tui": "^0.84.1",
     "@modelcontextprotocol/sdk": "^1.30.0",
     "mattpocock-skills": "github:mattpocock/skills#v1.2.3",
+    "pg": "^8.23.0",
+    "pgpass": "^1.0.5",
     "pi-autoresearch": "^1.6.2",
     "pi-sandbox": "^0.6.3",
     "ponytail": "github:DietrichGebert/ponytail#v4.7.0"

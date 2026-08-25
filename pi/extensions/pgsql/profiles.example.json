@@ -1,0 +1,9 @@
+{
+  "staging": {
+    "host": "some-host.eu-west-1.rds.amazonaws.com",
+    "port": 5432,
+    "database": "postgres",
+    "user": "some_user",
+    "ssl": true
+  }
+}

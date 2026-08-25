@@ -74,6 +74,22 @@ Use `/sandbox` inside pi to inspect the effective policy, or launch with `pi --n
 
 Generated visual previews should be opened with the `visual_preview` tool or `/visual-preview` command, not shell `open`, because bash runs inside the OS sandbox.
 
+## PostgreSQL tool
+
+The `pgsql` tool runs one read-only statement against profiles in the gitignored `pi/extensions/pgsql/profiles.json`. Start from the committed example:
+
+```bash
+cp pi/extensions/pgsql/profiles.example.json pi/extensions/pgsql/profiles.json
+```
+
+It reads matching passwords from `~/.pgpass`, which is hard-blocked from agent reads and sandboxed commands.
+
+```text
+gv.czgygsdex7bm.eu-west-1.rds.amazonaws.com:5432:postgres:nineapp_user:PASSWORD
+```
+
+Set `chmod 600 ~/.pgpass`. Install the AWS RDS CA bundle at `~/.postgresql/root.crt`, then run `/reload`. Query output is limited to 100 rows and the normal pi tool-output limits.
+
 ## MCP extension
 
 `pi/extensions/mcp` bridges Model Context Protocol servers into pi tools. Copy

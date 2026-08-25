@@ -1,7 +1,38 @@
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { isToolCallEventType, type ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { statSync } from "node:fs";
+import { homedir } from "node:os";
+import { join, resolve } from "node:path";
 import sandbox from "pi-sandbox";
 
+const PGPASS_PATH = join(homedir(), ".pgpass");
+
+function isPgpassPath(input: string, cwd: string): boolean {
+  const path = input.replace(/^@/, "");
+  const resolved = path === "~" || path.startsWith("~/")
+    ? join(homedir(), path.slice(2))
+    : resolve(cwd, path);
+
+  try {
+    const candidate = statSync(resolved);
+    const pgpass = statSync(PGPASS_PATH);
+    return candidate.dev === pgpass.dev && candidate.ino === pgpass.ino;
+  } catch {
+    return resolved === PGPASS_PATH;
+  }
+}
+
 export default function (pi: ExtensionAPI) {
+  pi.on("tool_call", (event, ctx) => {
+    if (
+      (isToolCallEventType("read", event) ||
+        isToolCallEventType("write", event) ||
+        isToolCallEventType("edit", event)) &&
+      isPgpassPath(event.input.path, ctx.cwd)
+    ) {
+      return { block: true, reason: "~/.pgpass is reserved for the trusted pgsql tool" };
+    }
+  });
+
   sandbox(pi);
   if (process.env.HERDR_ENV !== "1") return;
 

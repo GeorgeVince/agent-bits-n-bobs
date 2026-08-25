@@ -11,11 +11,17 @@ PI_DIR="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
 echo "Updating pnpm dependencies ..."
 (cd "$REPO_DIR" && pnpm --recursive update --latest)
 
-# 2. Register the repo as a pi package. Idempotent: re-running just updates settings.
+# 2. Seed local, non-versioned PostgreSQL profiles.
+PG_PROFILES="$REPO_DIR/pi/extensions/pgsql/profiles.json"
+if [[ ! -e "$PG_PROFILES" ]]; then
+  cp "$REPO_DIR/pi/extensions/pgsql/profiles.example.json" "$PG_PROFILES"
+fi
+
+# 3. Register the repo as a pi package. Idempotent: re-running just updates settings.
 echo "Registering pi package ..."
 pi install "$REPO_DIR"
 
-# 3. These files are not pi package resources, so symlink them directly.
+# 4. These files are not pi package resources, so symlink them directly.
 mkdir -p "$PI_DIR"
 for file in AGENTS.md keybindings.json sandbox.json; do
   ln -sfn "$REPO_DIR/pi/$file" "$PI_DIR/$file"

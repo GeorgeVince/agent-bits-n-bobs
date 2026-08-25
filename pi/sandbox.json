@@ -86,7 +86,13 @@
       "~/.ssh/id_rsa",
       "~/.ssh/id_ed25519",
       "~/.ssh/*.pem",
-      "~/.ssh/*.key"
+      "~/.ssh/*.key",
+      "~/.pgpass"
+    ]
+  },
+  "credentials": {
+    "files": [
+      { "path": "~/.pgpass", "mode": "deny" }
     ]
   }
 }
