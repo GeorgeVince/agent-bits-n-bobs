@@ -1,7 +1,7 @@
 import type { UserMessage } from "@earendil-works/pi-ai";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 
-const MODEL = ["openai-codex", "gpt-5.3-codex-spark"] as const;
+const MODEL = ["openai-codex", "gpt-5.6-luna"] as const;
 const SYSTEM_PROMPT = "Write a 2-5 word title for this coding task. Output only the title, with no quotes or punctuation.";
 
 export function cleanTitle(text: string): string | undefined {
@@ -19,10 +19,10 @@ export default function autoTitle(pi: ExtensionAPI) {
 
   const nameFromPrompt = async (prompt: string, ctx: ExtensionContext) => {
     if (attempted || pi.getSessionName()) return;
-    attempted = true;
 
     const model = ctx.modelRegistry.find(...MODEL);
     if (!model || !ctx.modelRegistry.hasConfiguredAuth(model)) return;
+    attempted = true;
 
     const message: UserMessage = {
       role: "user",
@@ -42,9 +42,15 @@ export default function autoTitle(pi: ExtensionAPI) {
           .map((part) => part.text)
           .join(" "),
       );
-      if (title && !pi.getSessionName()) pi.setSessionName(title);
-    } catch {
-      // ponytail: a tab title is optional; never fail the user's actual request.
+      if (response.stopReason === "error") {
+        ctx.ui.notify(`Auto title failed: ${response.errorMessage ?? "model error"}`, "warning");
+      } else if (title && !pi.getSessionName()) {
+        pi.setSessionName(title);
+      } else if (!title) {
+        ctx.ui.notify("Auto title failed: model returned no text", "warning");
+      }
+    } catch (error) {
+      ctx.ui.notify(`Auto title failed: ${error instanceof Error ? error.message : String(error)}`, "warning");
     }
   };
 

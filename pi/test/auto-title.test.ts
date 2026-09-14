@@ -6,7 +6,7 @@ test("names an unnamed session once with the title model", async () => {
   const events = new Map<string, any>();
   const names: string[] = [];
   let completions = 0;
-  const model = { provider: "openai-codex", id: "gpt-5.3-codex-spark" };
+  const model = { provider: "openai-codex", id: "gpt-5.6-luna" };
   const pi: any = {
     getSessionName: () => names.at(-1),
     on: (name: string, handler: unknown) => events.set(name, handler),
@@ -48,7 +48,7 @@ test("names an existing unnamed session when the extension loads", async () => {
       getBranch: () => [{ type: "message", message: { role: "user", content: "Investigate the missing footer title" } }],
     },
     modelRegistry: {
-      find: () => ({ provider: "openai-codex", id: "gpt-5.3-codex-spark" }),
+      find: () => ({ provider: "openai-codex", id: "gpt-5.6-luna" }),
       hasConfiguredAuth: () => true,
       complete: async () => ({ content: [{ type: "text", text: "Fix footer title" }] }),
     },
