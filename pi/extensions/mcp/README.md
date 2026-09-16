@@ -52,6 +52,50 @@ Claude-Desktop compatible `mcpServers` map. `${VAR}` / `$VAR` are expanded from 
 }
 ```
 
+## 9fin
+
+9fin's hosted MCP endpoint is `https://mcp.9fin.com/mcp`. It uses browser OAuth
+with your own 9fin account; no API key, OAuth client ID, or client secret is needed.
+The customer guide lists an active 9fin Premium licence as a prerequisite, and
+tools inherit your user entitlements.
+
+The `9fin` entry uses `mcp-remote`, like Linear and Notion. Authenticate once from
+your terminal to avoid pi's connection timeout:
+
+```bash
+npx -y mcp-remote https://mcp.9fin.com/mcp
+# Complete browser sign-in, then Ctrl+C.
+```
+
+Run `/reload` in pi, then use the MCP gateway tools with server `9fin`, or
+`/mcp enable 9fin` to expose its tools directly. Tokens are cached in `~/.mcp-auth`.
+The separate `9fin-staging` entry uses `https://mcp.staging.9fin.com/mcp`.
+Authenticate it independently:
+
+```bash
+npx -y mcp-remote https://mcp.staging.9fin.com/mcp
+# Complete browser sign-in, then Ctrl+C.
+```
+
+To smoke-test both connections yourself, run these commands in pi after signing
+in to each environment:
+
+```text
+/reload
+/mcp enable 9fin
+/mcp enable 9fin-staging
+/mcp tools
+```
+
+Successful tool discovery checks connectivity, OAuth, and MCP initialization;
+it does not prove individual data tools work. For an end-to-end staging check,
+ask the agent to discover a read-only company lookup tool on `9fin-staging` and
+query a known staging company. Test production data tools manually in an
+approved client; this agent's policy prohibits production execution.
+
+Sources: [Customer setup guide](https://www.notion.so/3a322837308b8163ab5bdb25b2503f4d)
+and [MCP gateway engineering guide](https://www.notion.so/3b522837308b800b8c82c20ce7c5b3bb).
+
 ## SigNoz observability server
 
 The [SigNoz MCP server](https://github.com/SigNoz/signoz-mcp-server) exposes your

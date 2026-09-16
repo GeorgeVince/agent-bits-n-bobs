@@ -1,5 +1,23 @@
 {
   "mcpServers": {
+    "9fin-local": {
+      "url": "http://127.0.0.1:8003/mcp",
+      "type": "http",
+      "description": "Local 9fin MCP development server.",
+      "autoEnable": false
+    },
+    "9fin-staging": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.staging.9fin.com/mcp"],
+      "description": "Staging 9fin financial research tools. Use for testing; separate from the production 9fin server.",
+      "autoEnable": false
+    },
+    "9fin": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.9fin.com/mcp"],
+      "description": "9fin financial research tools for companies, credit news, documents, financials, and capital structures, scoped to the signed-in user's entitlements.",
+      "autoEnable": false
+    },
     "filesystem": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/georgevince/dev"]
